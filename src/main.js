@@ -3,7 +3,17 @@
 var posterImage = document.querySelector('.poster-img')
 var posterTitle = document.querySelector('.poster-title')
 var posterQuote = document.querySelector('.poster-quote')
+
 var showRandomPosterButton = document.querySelector('.show-random')
+var makeOwnPosterButton = document.querySelector('.show-form')
+var showSavedPostersButton = document.querySelector('.show-saved')
+var nvmTakeMeBackButton = document.querySelector('.show-main')
+var backToMainButton = document.querySelector('.back-to-main')
+
+var mainPosterSection = document.querySelector('.main-poster')
+var posterFormSection = document.querySelector('.poster-form')
+var savedPosterSection = document.querySelector('.saved-posters')
+
 
 // we've provided you with some data to work with 👇
 // tip: you can tuck this data out of view with the dropdown found near the line number where the variable is declared 
@@ -115,6 +125,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
 showRandomPosterButton.addEventListener('click', showRandomPoster)
 
+makeOwnPosterButton.addEventListener('click', function() {
+  mainPosterSection.classList.toggle('hidden')
+  posterFormSection.classList.toggle('hidden')
+})
+
+showSavedPostersButton.addEventListener('click', function() {
+  mainPosterSection.classList.toggle('hidden')
+  savedPosterSection.classList.toggle('hidden')
+})
+
+nvmTakeMeBackButton.addEventListener('click', function() {
+  mainPosterSection.classList.toggle('hidden')
+  posterFormSection.classList.toggle('hidden')
+})
+
+backToMainButton.addEventListener('click', function() {
+  mainPosterSection.classList.toggle('hidden')
+  savedPosterSection.classList.toggle('hidden')
+})
 
 // functions and event handlers go here 👇
 // (we've provided two to get you started)!
