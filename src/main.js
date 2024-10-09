@@ -3,6 +3,7 @@
 var posterImage = document.querySelector('.poster-img')
 var posterTitle = document.querySelector('.poster-title')
 var posterQuote = document.querySelector('.poster-quote')
+var showRandomPosterButton = document.querySelector('.show-random')
 
 // we've provided you with some data to work with 👇
 // tip: you can tuck this data out of view with the dropdown found near the line number where the variable is declared 
@@ -111,6 +112,8 @@ var currentPoster;
 document.addEventListener('DOMContentLoaded', function() {
   showRandomPoster()
 })
+
+showRandomPosterButton.addEventListener('click', showRandomPoster)
 
 
 // functions and event handlers go here 👇
