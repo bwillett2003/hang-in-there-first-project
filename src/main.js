@@ -9,6 +9,11 @@ var makeOwnPosterButton = document.querySelector('.show-form')
 var showSavedPostersButton = document.querySelector('.show-saved')
 var nvmTakeMeBackButton = document.querySelector('.show-main')
 var backToMainButton = document.querySelector('.back-to-main')
+var showMyPosterButton = document.querySelector('.make-poster')
+
+var userPosterURL = document.querySelector('#poster-image-url')
+var userPosterTitle = document.querySelector('#poster-title')
+var userPosterQuote = document.querySelector('#poster-quote')
 
 var mainPosterSection = document.querySelector('.main-poster')
 var posterFormSection = document.querySelector('.poster-form')
@@ -119,31 +124,18 @@ var currentPoster;
 
 // event listeners go here 👇
 
-document.addEventListener('DOMContentLoaded', function() {
-  showRandomPoster()
-})
+document.addEventListener('DOMContentLoaded', showRandomPoster)
 
 showRandomPosterButton.addEventListener('click', showRandomPoster)
 
-makeOwnPosterButton.addEventListener('click', function() {
-  mainPosterSection.classList.toggle('hidden')
-  posterFormSection.classList.toggle('hidden')
-})
+makeOwnPosterButton.addEventListener('click', toggleFormView)
+nvmTakeMeBackButton.addEventListener('click', toggleFormView)
 
-showSavedPostersButton.addEventListener('click', function() {
-  mainPosterSection.classList.toggle('hidden')
-  savedPosterSection.classList.toggle('hidden')
-})
+showSavedPostersButton.addEventListener('click', toggleSavedView)
+backToMainButton.addEventListener('click', toggleSavedView)
 
-nvmTakeMeBackButton.addEventListener('click', function() {
-  mainPosterSection.classList.toggle('hidden')
-  posterFormSection.classList.toggle('hidden')
-})
 
-backToMainButton.addEventListener('click', function() {
-  mainPosterSection.classList.toggle('hidden')
-  savedPosterSection.classList.toggle('hidden')
-})
+showMyPosterButton.addEventListener('click', showMyPosterFormSubmit)
 
 // functions and event handlers go here 👇
 // (we've provided two to get you started)!
@@ -174,5 +166,36 @@ function createPoster(imageURL, title, quote) {
     quote: quote}
 }
 
+function toggleFormView() {
+  mainPosterSection.classList.toggle('hidden')
+  posterFormSection.classList.toggle('hidden')
+}
+
+function toggleSavedView() {
+  mainPosterSection.classList.toggle('hidden')
+  savedPosterSection.classList.toggle('hidden')
+}
+
+function showMyPosterFormSubmit(event) {
+  event.preventDefault()
+
+  var imageURL = userPosterURL.value.trim()
+  var title = userPosterTitle.value.trim()
+  var quote = userPosterQuote.value.trim()
+
+  if (!imageURL || !title || !quote) {
+    alert('Please fill out all fields before submitting.')
+    return
+  }
+
+  currentPoster = createPoster(imageURL, title, quote)
+
+  images.push(imageURL)
+  titles.push(title)
+  quotes.push(quote)
+
+  updateMainPoster()
+  toggleFormView()
+}
 
 console.log('This is fine.')
