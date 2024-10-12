@@ -10,6 +10,7 @@ var showSavedPostersButton = document.querySelector('.show-saved')
 var nvmTakeMeBackButton = document.querySelector('.show-main')
 var backToMainButton = document.querySelector('.back-to-main')
 var showMyPosterButton = document.querySelector('.make-poster')
+var savePosterButton = document.querySelector('.save-poster')
 
 var userPosterURL = document.querySelector('#poster-image-url')
 var userPosterTitle = document.querySelector('#poster-title')
@@ -18,6 +19,7 @@ var userPosterQuote = document.querySelector('#poster-quote')
 var mainPosterSection = document.querySelector('.main-poster')
 var posterFormSection = document.querySelector('.poster-form')
 var savedPosterSection = document.querySelector('.saved-posters')
+var savedPostersGrid = document.querySelector('.saved-posters-grid')
 
 
 // we've provided you with some data to work with 👇
@@ -129,13 +131,19 @@ document.addEventListener('DOMContentLoaded', showRandomPoster)
 showRandomPosterButton.addEventListener('click', showRandomPoster)
 
 makeOwnPosterButton.addEventListener('click', toggleFormView)
+
 nvmTakeMeBackButton.addEventListener('click', toggleFormView)
 
-showSavedPostersButton.addEventListener('click', toggleSavedView)
+showSavedPostersButton.addEventListener('click', function() {
+  displaySavedPosters()
+  toggleSavedView()
+})
+
 backToMainButton.addEventListener('click', toggleSavedView)
 
-
 showMyPosterButton.addEventListener('click', showMyPosterFormSubmit)
+
+savePosterButton.addEventListener('click', savePoster)
 
 // functions and event handlers go here 👇
 // (we've provided two to get you started)!
@@ -196,6 +204,33 @@ function showMyPosterFormSubmit(event) {
 
   updateMainPoster()
   toggleFormView()
+}
+
+function savePoster() {
+  if (savedPosters.find(poster => poster.imageURL === currentPoster.imageURL &&
+                                  poster.title === currentPoster.title &&
+                                  poster.quote === currentPoster.quote)) {
+    return
+  }
+
+  savedPosters.push(currentPoster)
+}
+
+function displaySavedPosters() {
+  savedPostersGrid.innerHTML = ''
+
+  savedPosters.forEach(poster => {
+    var miniPoster = document.createElement('div')
+    miniPoster.classList.add('mini-poster')
+
+    miniPoster.innerHTML = `
+    <img src="${poster.imageURL}" alt="Poster Image">
+    <h2>${poster.title}</h2>
+    <h4>${poster.quote}</h4>
+    `
+
+    savedPostersGrid.appendChild(miniPoster)
+  })
 }
 
 console.log('This is fine.')
