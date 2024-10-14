@@ -11,6 +11,8 @@ var nvmTakeMeBackButton = document.querySelector('.show-main')
 var backToMainButton = document.querySelector('.back-to-main')
 var showMyPosterButton = document.querySelector('.make-poster')
 var savePosterButton = document.querySelector('.save-poster')
+var showUnmotivationalButton = document.querySelector('.show-unmotivational')
+var backToMainUnmotivationalButton = document.querySelector('.back-to-main-unmotivational')
 
 var userPosterURL = document.querySelector('#poster-image-url')
 var userPosterTitle = document.querySelector('#poster-title')
@@ -20,6 +22,8 @@ var mainPosterSection = document.querySelector('.main-poster')
 var posterFormSection = document.querySelector('.poster-form')
 var savedPosterSection = document.querySelector('.saved-posters')
 var savedPostersGrid = document.querySelector('.saved-posters-grid')
+var unmotivationalPosterSection = document.querySelector('.unmotivational-posters')
+var unmotivationalPostersGrid = document.querySelector('.unmotivational-posters-grid')
 
 
 // we've provided you with some data to work with 👇
@@ -121,6 +125,129 @@ var quotes = [
   "Each person must live their life as a model for others.",
   "A champion is defined not by their wins but by how they can recover when they fall."
 ];
+var unmotivationalPosters = [
+  {
+    name: "FAILURE",
+    description: "Why bother trying? It's probably not worth it.",
+    price: 68.00,
+    year: 2019,
+    vintage: true,
+    img_url: "./assets/failure.jpg",
+  },
+  {
+    name: "MEDIOCRITY",
+    description: "Dreams are just that—dreams.",
+    price: 127.00,
+    year: 2021,
+    vintage: false,
+    img_url: "./assets/mediocrity.jpg",
+  },
+  {
+    name: "REGRET",
+    description: "Hard work rarely pays off.",
+    price: 89.00,
+    year: 2018,
+    vintage: true,
+    img_url:  "./assets/regret.jpg",
+  },
+  {
+    name: "FUTILITY",
+    description: "You're not good enough.",
+    price: 150.00,
+    year: 2016,
+    vintage: false,
+    img_url:  "./assets/futility.jpg",
+  },
+  {
+    name: "DEFEAT",
+    description: "It's too late to start now.",
+    price: 35.00,
+    year: 2023,
+    vintage: false,
+    img_url:  "./assets/defeat.jpg",
+  },
+  {
+    name: "HOPELESSNESS",
+    description: "Stay in your comfort zone; it's safer.",
+    price: 112.00,
+    year: 2020,
+    vintage: true,
+    img_url: "./assets/hopelessness.jpg",
+  },
+  {
+    name: "LAZINESS",
+    description: "You can't change anything.",
+    price: 25.00,
+    year: 2022,
+    vintage: false,
+    img_url: "./assets/laziness.jpg",
+  },
+  {
+    name: "PROCRASTINATION",
+    description: "Better to avoid failure by not trying at all.",
+    price: 48.00,
+    year: 2017,
+    vintage: true,
+    img_url: "./assets/procrastination.jpg",
+  },
+  {
+    name: "DESPAIR",
+    description: "Let someone else do it; you’ll just mess it up.",
+    price: 73.00,
+    year: 2015,
+    vintage: false,
+    img_url: "./assets/despair.jpg",
+  },
+  {
+    name: "NEGLECT",
+    description: "Happiness is overrated.",
+    price: 160.00,
+    year: 2019,
+    vintage: true,
+    img_url: "./assets/neglect.jpg",
+  },
+  {
+    name: "FEAR",
+    description: "Giving up is always an option.",
+    price: 91.00,
+    year: 2014,
+    vintage: false,
+    img_url: "./assets/fear.jpg",
+  },
+  {
+    name: "APATHY",
+    description: "No one cares about your effort.",
+    price: 110.00,
+    year: 2016,
+    vintage: true,
+    img_url: "./assets/apathy.jpg",
+  },
+  {
+    name: "MISERY",
+    description: "Why take risks when you can stay stagnant?",
+    price: 55.00,
+    year: 2021,
+    vintage: false,
+    img_url: "./assets/misery.jpg",
+  },
+  {
+    name: "BLAME",
+    description: "Expect disappointment and you'll never be disappointed.",
+    price: 39.00,
+    year: 2017,
+    vintage: true,
+    img_url: "./assets/blame.jpg",
+  },
+  {
+    name: "DOUBT",
+    description: "Success is for other people, not you.",
+    price: 140.00,
+    year: 2020,
+    vintage: false,
+    img_url: "./assets/doubt.jpg",
+  }
+];
+
 var savedPosters = [];
 var currentPoster;
 
@@ -144,6 +271,13 @@ backToMainButton.addEventListener('click', toggleSavedView)
 showMyPosterButton.addEventListener('click', showMyPosterFormSubmit)
 
 savePosterButton.addEventListener('click', savePoster)
+
+showUnmotivationalButton.addEventListener('click', function() {
+  toggleUnmotivationalView()
+  displayUnmotivationalPosters()
+})
+
+backToMainUnmotivationalButton.addEventListener('click', toggleUnmotivationalView)
 
 // functions and event handlers go here 👇
 // (we've provided two to get you started)!
@@ -184,6 +318,11 @@ function toggleSavedView() {
   savedPosterSection.classList.toggle('hidden')
 }
 
+function toggleUnmotivationalView() {
+  mainPosterSection.classList.toggle('hidden')
+  unmotivationalPosterSection.classList.toggle('hidden')
+}
+
 function showMyPosterFormSubmit(event) {
   event.preventDefault()
 
@@ -195,7 +334,6 @@ function showMyPosterFormSubmit(event) {
     alert('Please fill out all fields before submitting.')
     return
   }
-
   currentPoster = createPoster(imageURL, title, quote)
 
   images.push(imageURL)
@@ -212,7 +350,6 @@ function savePoster() {
                                   poster.quote === currentPoster.quote)) {
     return
   }
-
   savedPosters.push(currentPoster)
 }
 
@@ -228,9 +365,36 @@ function displaySavedPosters() {
     <h2>${poster.title}</h2>
     <h4>${poster.quote}</h4>
     `
-
     savedPostersGrid.appendChild(miniPoster)
   })
 }
+
+function cleanData(unmotivationalPostersData) {
+  var cleanedData = []
+  
+  unmotivationalPostersData.forEach(function(poster){
+    var cleanedPoster = createPoster(poster.img_url, poster.name, poster.description)
+    cleanedData.push(cleanedPoster)
+  })
+  
+  return cleanedData
+}
+
+function displayUnmotivationalPosters() {
+  unmotivationalPostersGrid.innerHTML = ''
+
+  cleanedUnmotivationalPosters.forEach(poster => {
+    var miniPoster = document.createElement('div')
+    miniPoster.classList.add('mini-poster')
+    miniPoster.innerHTML = `
+      <img src="${poster.imageURL}" alt="${poster.title}">
+      <h2>${poster.title}</h2>
+      <h4>${poster.quote}</h4>
+    `
+    unmotivationalPostersGrid.appendChild(miniPoster)
+  })
+}
+
+var cleanedUnmotivationalPosters = cleanData(unmotivationalPosters)
 
 console.log('This is fine.')
