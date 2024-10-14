@@ -261,10 +261,7 @@ makeOwnPosterButton.addEventListener('click', toggleFormView)
 
 nvmTakeMeBackButton.addEventListener('click', toggleFormView)
 
-showSavedPostersButton.addEventListener('click', function() {
-  displaySavedPosters()
-  toggleSavedView()
-})
+showSavedPostersButton.addEventListener('click', showSavedPostersSection)
 
 backToMainButton.addEventListener('click', toggleSavedView)
 
@@ -272,10 +269,7 @@ showMyPosterButton.addEventListener('click', showMyPosterFormSubmit)
 
 savePosterButton.addEventListener('click', savePoster)
 
-showUnmotivationalButton.addEventListener('click', function() {
-  toggleUnmotivationalView()
-  displayUnmotivationalPosters()
-})
+showUnmotivationalButton.addEventListener('click', showUnmotivationalSection)
 
 backToMainUnmotivationalButton.addEventListener('click', toggleUnmotivationalView)
 
@@ -321,6 +315,16 @@ function toggleSavedView() {
 function toggleUnmotivationalView() {
   mainPosterSection.classList.toggle('hidden')
   unmotivationalPosterSection.classList.toggle('hidden')
+}
+
+function showSavedPostersSection() {
+  displaySavedPosters()
+  toggleSavedView()
+}
+
+function showUnmotivationalSection() {
+  toggleUnmotivationalView()
+  displayUnmotivationalPosters()
 }
 
 function showMyPosterFormSubmit(event) {
