@@ -273,6 +273,8 @@ showUnmotivationalButton.addEventListener('click', showUnmotivationalSection)
 
 backToMainUnmotivationalButton.addEventListener('click', toggleUnmotivationalView)
 
+unmotivationalPostersGrid.addEventListener('dblclick', deleteUnmotivationalPoster)
+
 // functions and event handlers go here 👇
 // (we've provided two to get you started)!
 function showRandomPoster() {
@@ -400,5 +402,15 @@ function displayUnmotivationalPosters() {
 }
 
 var cleanedUnmotivationalPosters = cleanData(unmotivationalPosters)
+
+function deleteUnmotivationalPoster(event) {
+  var miniPoster = event.target.closest('.mini-poster')
+
+  if (miniPoster) {
+    var index = Array.from(unmotivationalPostersGrid.children).indexOf(miniPoster)
+    cleanedUnmotivationalPosters.splice(index, 1)
+    displayUnmotivationalPosters()
+  }
+}
 
 console.log('This is fine.')
