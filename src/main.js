@@ -412,5 +412,3 @@ function deleteUnmotivationalPoster(event) {
     displayUnmotivationalPosters()
   }
 }
-
-console.log('This is fine.')
