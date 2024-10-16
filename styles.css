@@ -111,7 +111,9 @@ button:hover {
 }
 
 .saved-posters-grid {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
   padding: 20px;
@@ -128,6 +130,7 @@ button:hover {
 .mini-poster img {
   height:200px;
   width: 300px;
+  border: 2px solid white;
 }
 
 .mini-poster h2,
